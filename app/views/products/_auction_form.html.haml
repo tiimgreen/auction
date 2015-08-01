@@ -1,0 +1,6 @@
+- unless @product.product_auction.present?
+  %h2 Send to auction
+
+  = form_for [@product, ProductAuction.new] do |f|
+    = f.text_field :value
+    = f.button 'Send'

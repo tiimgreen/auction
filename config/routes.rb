@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   root 'products#index'
 
-  resources :products
+  resources :products do
+    resource :product_auctions, only: %i( create ), path: :auctions
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
