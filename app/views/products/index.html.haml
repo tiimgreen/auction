@@ -1,23 +1,21 @@
 %h1 Listing products
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Image
-      %th
-      %th
-      %th
 
-  %tbody
-    - @products.each do |product|
-      %tr
-        %td= product.name
-        %td= product.image
-        %td= link_to 'Show', product
-        %td= link_to 'Edit', edit_product_path(product)
-        %td= link_to 'Destroy', product, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-%br
+- @products.each do |product|
+  .panel.panel-default
+    .panel-heading= link_to product.name, product
+    .panel-body
+      .row
+        .col-md-5
+          = link_to product do
+            = image_tag product.image, height: 200
+        .col-md-7
+          .pull-right
+            = link_to 'Edit', edit_product_path(product)
+            = link_to 'Destroy', product, :method => :delete, :data => { confirm: 'Are you sure?' }
 
-= link_to 'New Product', new_product_path
+
+.row
+  %p
+    = link_to 'New Product', new_product_path, class: 'btn btn-primary'

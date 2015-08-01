@@ -1,7 +1,5 @@
-%h1 Editing product
+%h1
+  Edit
+  = link_to @product.name, @product
 
 = render 'form'
-
-= link_to 'Show', @product
-\|
-= link_to 'Back', products_path
