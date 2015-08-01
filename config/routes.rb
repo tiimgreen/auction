@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root 'products#index'
 
   resources :products do
-    resource :product_auctions, only: %i( create ), path: :auctions
+    resources :product_auctions, only: %i( create ), path: :auctions do
+      resources :bids, only: %i( create )
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

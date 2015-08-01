@@ -1,0 +1,8 @@
+= form_for [@product, @product.product_auction, Bid.new] do |f|
+  %h2
+    Current bid:
+    %strong= @product.product_auction.current_bid
+
+  %p
+    = f.text_field :value
+    = f.submit 'Bid'

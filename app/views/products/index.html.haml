@@ -1,6 +1,4 @@
-%h1 Listing products
-
-
+%h1 Products
 
 - @products.each do |product|
   .panel.panel-default
@@ -8,6 +6,7 @@
       .pull-right.created-by
         Created by:
         %strong.email= product.user.email
+
       = link_to product.name, product
     .panel-body
       .row
@@ -15,10 +14,10 @@
           = link_to product do
             = image_tag product.image, height: 200
         .col-md-7
-          .pull-right
-            = link_to 'Edit', edit_product_path(product)
-            = link_to 'Destroy', product, :method => :delete, :data => { confirm: 'Are you sure?' }
-
+          - if product.owned_by?(current_user)
+            .pull-right
+              = link_to 'Edit', edit_product_path(product), class: 'btn btn-default'
+              = link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
 
 .row
   %p
