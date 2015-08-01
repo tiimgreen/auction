@@ -25,3 +25,7 @@ group :test do
   gem 'timecop'
   gem 'database_cleaner'
 end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0'
+end
