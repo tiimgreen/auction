@@ -4,7 +4,11 @@
 
 - @products.each do |product|
   .panel.panel-default
-    .panel-heading= link_to product.name, product
+    .panel-heading
+      .pull-right.created-by
+        Created by:
+        %strong.email= product.user.email
+      = link_to product.name, product
     .panel-body
       .row
         .col-md-5

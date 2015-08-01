@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i(show edit update destroy)
+  before_action :authenticate_user!, except: %i(index)
 
   def index
     @products = Product.all
@@ -16,7 +17,7 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(product_params)
+    @product = current_user.products.build(product_params)
 
     if @product.save
       flash[:success] = 'Product was successfully created.'
