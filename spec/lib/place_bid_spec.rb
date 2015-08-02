@@ -20,4 +20,16 @@ describe PlaceBid do
 
     expect(product_auction.current_bid).to eq(new_bid_value)
   end
+
+  it 'fails to place a bid that is under the current value' do
+    service = PlaceBid.new(
+      value: 9,
+      user_id: bidding_user.id,
+      product_auction_id: product_auction.id
+    )
+    service.execute
+
+    expect(product_auction.current_bid).to eq(10)
+    expect(service.error).to eq('That bid is below the current bid')
+  end
 end

@@ -1,14 +1,20 @@
 class PlaceBid
+  attr_accessor :error
+
   def initialize(options)
-    @value = options[:value]
+    @value = options[:value].to_f
     @user_id = options[:user_id]
     @auction_id = options[:product_auction_id]
   end
 
   def execute
     auction = ProductAuction.find(@auction_id)
-    bid = auction.bids.build(value: @value, user_id: @user_id)
 
-    return true if bid.save
+    if @value <= auction.current_bid
+      @error = 'That bid is below the current bid'
+      return false
+    end
+
+    bid = auction.bids.create(value: @value, user_id: @user_id)
   end
 end
