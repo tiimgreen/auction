@@ -34,5 +34,7 @@ module Auction
     config.generators do |g|
       g.javascript_engine :js
     end
+
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

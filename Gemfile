@@ -24,6 +24,7 @@ group :test do
   gem 'pry-byebug'
   gem 'timecop'
   gem 'database_cleaner'
+  gem 'factory_girl_rails', '~> 4.5.0'
 end
 
 group :development, :test do
