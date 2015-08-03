@@ -22,6 +22,13 @@ class Product < ActiveRecord::Base
     update_attribute(:user_id, user.id)
   end
 
+  def to_claim(user)
+    product_auction.won_by(user) &&
+      unclaimed_by(user)
+  end
+
+  private
+
   def unclaimed_by(user)
     user_id != user.id
   end

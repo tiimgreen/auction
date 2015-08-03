@@ -1,6 +1,6 @@
 - if @product.product_auction.ended?
   = @product.product_auction.status(current_user)
 
-  - if @product.product_auction.won_by(current_user) && @product.unclaimed_by(current_user)
+  - if @product.to_claim(current_user)
     = link_to 'Claim', transfer_product_path(@product), class: 'btn btn-success', method: :put
 
