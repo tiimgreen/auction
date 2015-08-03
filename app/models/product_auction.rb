@@ -33,6 +33,6 @@ class ProductAuction < ActiveRecord::Base
   private
 
   def any_bids_from?(user)
-    bids.map { |b| b.user }.include?(user)
+    bids.map(:user).include?(user)
   end
 end
