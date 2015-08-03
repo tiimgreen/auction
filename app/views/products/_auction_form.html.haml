@@ -1,6 +1,13 @@
-- unless @product.product_auction.present?
+- if !@product.has_auction? && @product.owned_by?(current_user)
   %h2 Send to auction
 
   = form_for [@product, ProductAuction.new] do |f|
-    = f.text_field :value
-    = f.button 'Send'
+    %p
+      = f.label :value, 'Bid'
+      = f.text_field :value
+
+    %p
+      = f.label :ends_at, 'Ends At'
+      = f.datetime_select :ends_at
+
+    %p= f.button 'Send'

@@ -1,8 +1,19 @@
-= form_for [@product, @product.product_auction, Bid.new] do |f|
-  %h2
-    Current bid:
-    %strong= @product.product_auction.current_bid
+- if @product.has_auction?
+  - if @product.auction.ended?
+    = render 'auctions/status'
+  - else
+    = form_for [@product, @product.product_auction, Bid.new] do |f|
+      %h2
+        Current bid:
+        %strong= @product.product_auction.current_bid
 
-  %p
-    = f.text_field :value
-    = f.submit 'Bid'
+        - if @product.product_auction.top_bid.bid_placed_by?(current_user)
+          %span.label.label-success Your BID!
+
+      %p
+        Ends at:
+        = l(@product.product_auction.ends_at)
+
+      %p
+        = f.text_field :value
+        = f.submit 'Bid'

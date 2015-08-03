@@ -1,11 +1,11 @@
 %h1= @product.name
 
 .row
-  .col-md-4
+  .col-md-5
     = image_tag @product.image
     = render 'auction_form'
     = render 'bid_form'
-  .col-md-8
+  .col-md-7
 
 %p
   = link_to 'Edit', edit_product_path(@product)

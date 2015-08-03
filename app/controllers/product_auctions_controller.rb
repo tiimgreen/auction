@@ -2,7 +2,7 @@ class ProductAuctionsController < ApplicationController
 
   def create
     product = Product.find(params[:product_id])
-    auction = product.product_auctions.build(product_auction_params)
+    auction = product.build_product_auction(product_auction_params)
 
     if auction.save
       flash[:success] = 'Product sent to auction'
@@ -16,6 +16,6 @@ class ProductAuctionsController < ApplicationController
   private
 
     def product_auction_params
-      params.require(:product_auction).permit(:value)
+      params.require(:product_auction).permit(:value, :ends_at)
     end
 end

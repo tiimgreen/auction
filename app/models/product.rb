@@ -13,4 +13,8 @@ class Product < ActiveRecord::Base
   def auction
     product_auction
   end
+
+  def has_auction?
+    product_auction.present?
+  end
 end
