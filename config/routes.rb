@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     resources :product_auctions, only: %i( create ), path: :auctions do
       resources :bids, only: %i( create )
     end
+
+    member do
+      put :transfer
+    end
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

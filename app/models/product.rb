@@ -17,4 +17,12 @@ class Product < ActiveRecord::Base
   def has_auction?
     product_auction.present?
   end
+
+  def transfer_to(user)
+    update_attribute(:user_id, user.id)
+  end
+
+  def unclaimed_by(user)
+    user_id != user.id
+  end
 end

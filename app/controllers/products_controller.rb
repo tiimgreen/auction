@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i(show edit update destroy)
+  before_action :set_product, only: %i(show edit update destroy transfer)
   before_action :authenticate_user!, except: %i(index)
 
   def index
@@ -40,6 +40,17 @@ class ProductsController < ApplicationController
     @product.destroy
     flash[:success] = 'Product was successfully destroyed.'
     redirect_to products_url
+  end
+
+  def transfer
+    if @product.product_auction.ended?
+      @product.transfer_to(@product.product_auction.top_bid.user)
+      flash[:success] = 'Successfully transferred product'
+    else
+      flash[:warning] = 'The auction hasn\'t ended yet.'
+    end
+
+    redirect_to @product
   end
 
   private
