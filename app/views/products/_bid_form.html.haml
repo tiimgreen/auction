@@ -3,12 +3,10 @@
     = render 'auctions/status'
   - else
     = form_for [@product, @product.product_auction, Bid.new] do |f|
-      %h2
-        Current bid:
-        %strong= @product.product_auction.current_bid
-
-        - if @product.product_auction.top_bid.bid_placed_by?(current_user)
-          %span.label.label-success Your BID!
+      %h2.message
+        %strong
+          Current bid:
+          = @product.product_auction.current_bid
 
       %p
         Ends at:

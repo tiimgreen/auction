@@ -54,7 +54,7 @@ AuctionSocket.prototype.sendBid = function(value) {
 
 AuctionSocket.prototype.bid = function() {
   this.form.find('.message strong').html(
-    'Your bid: ' + this.value
+    'Current bid: ' + this.value + ' <span class="label label-success">Your BID!</span>'
   );
 }
 

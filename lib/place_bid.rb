@@ -15,6 +15,6 @@ class PlaceBid
       return false
     end
 
-    bid = auction.bids.create(value: @value, user_id: @user_id)
+    auction.bids.create(value: @value, user_id: @user_id)
   end
 end
