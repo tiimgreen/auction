@@ -11,17 +11,23 @@ var AuctionSocket = function(user_id, auction_id, form) {
 AuctionSocket.prototype.initBinds = function() {
   var _this = this;
 
+  // When the form is submitted, prevent default and send the value to
+  // sendBid();
+  // {{ step_1 }}
   this.form.submit(function(e) {
     e.preventDefault();
     _this.sendBid($("#bid_value").val());
   });
 
+  // Client receives message and is decoded and designated to its own function
+  // {{ step_7 }}
   this.socket.onmessage = function(e) {
     var tokens = e.data.split(' ');
+    console.log('tokens: ' + tokens);
 
     switch(tokens[0]) {
       case 'bidok':
-        _this.bid(tokens[1]);
+        _this.bid();
         break;
       case 'underbid':
         _this.underbid(tokens[1]);
@@ -43,11 +49,13 @@ AuctionSocket.prototype.initBinds = function() {
 
 AuctionSocket.prototype.sendBid = function(value) {
   this.value = value;
-  var template = "bid {{auction_id}} {{user_id}} {{value}}";
+  var template = "bid {{product_auction_id}} {{user_id}} {{value}}";
 
+  // Sends data to server
+  // {{ step_2 }}
   this.socket.send(Mustache.render(template, {
     user_id: this.user_id,
-    auction_id: this.auction_id,
+    product_auction_id: this.auction_id,
     value: value
   }));
 };

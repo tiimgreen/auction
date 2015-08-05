@@ -5,6 +5,8 @@ class AuctionSocket
     @app = app
   end
 
+  # This function is automatically called by Rails as it is middleware
+  # {{ step_3 }}
   def call(env)
     @env = env
 
@@ -23,6 +25,8 @@ class AuctionSocket
     Faye::WebSocket.websocket? env
   end
 
+  # Decode message and act on it, including making a bid
+  # {{ step_5 }}
   def spawn_socket
     socket = Faye::WebSocket.new env
 
@@ -52,6 +56,8 @@ class AuctionSocket
 
   private
 
+  # Make a bid and sends the response back to the client
+  # {{ step_6 }}
   def bid(socket, tokens)
     service = PlaceBid.new(
       value: tokens[2],
@@ -59,8 +65,6 @@ class AuctionSocket
       product_auction_id: tokens[0]
     )
 
-    service.execute
-
-    socket.send 'bidok'
+    socket.send(service.execute ? 'bidok' : "underbid #{tokens[2]}")
   end
 end
