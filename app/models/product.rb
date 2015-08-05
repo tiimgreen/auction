@@ -1,6 +1,6 @@
 class Product < ActiveRecord::Base
   belongs_to :user
-  has_one :product_auction
+  has_one :product_auction, dependent: :destroy
 
   validates :name,    presence: true, length: { maximum: 250 }
   validates :image,   presence: true

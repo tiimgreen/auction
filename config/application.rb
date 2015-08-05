@@ -1,4 +1,5 @@
 require File.expand_path('../boot', __FILE__)
+require File.expand_path('../../lib/auction_socket', __FILE__)
 
 # Pick the frameworks you want:
 require "active_model/railtie"
@@ -36,5 +37,7 @@ module Auction
     end
 
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.middleware.use AuctionSocket
   end
 end

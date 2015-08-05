@@ -11,3 +11,8 @@
   = link_to 'Edit', edit_product_path(@product)
   \|
   = link_to 'Back', products_path
+
+:javascript
+  App = {
+    websocket_url: "ws://#{request.host}:#{request.port}/"
+  }

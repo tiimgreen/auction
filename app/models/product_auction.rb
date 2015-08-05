@@ -1,6 +1,6 @@
 class ProductAuction < ActiveRecord::Base
   belongs_to :product
-  has_many :bids
+  has_many :bids, dependent: :destroy
 
   validates :product_id, presence: true
 
@@ -33,6 +33,6 @@ class ProductAuction < ActiveRecord::Base
   private
 
   def any_bids_from?(user)
-    bids.map(:user).include?(user)
+    bids.any? ? bids.map(:user).include?(user) : false
   end
 end
