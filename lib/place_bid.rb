@@ -1,5 +1,6 @@
 class PlaceBid
   attr_accessor :error
+  attr_reader :auction
 
   def initialize(options)
     @value = options[:value].to_f
@@ -8,13 +9,13 @@ class PlaceBid
   end
 
   def execute
-    auction = ProductAuction.find(@auction_id)
+    @auction = ProductAuction.find(@auction_id)
 
-    if @value <= auction.current_bid
+    if @value <= @auction.current_bid
       @error = 'That bid is below the current bid'
       return false
     end
 
-    auction.bids.create(value: @value, user_id: @user_id)
+    @auction.bids.create(value: @value, user_id: @user_id)
   end
 end

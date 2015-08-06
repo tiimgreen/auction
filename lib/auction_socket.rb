@@ -65,6 +65,6 @@ class AuctionSocket
       product_auction_id: tokens[0]
     )
 
-    socket.send(service.execute ? 'bidok' : "underbid #{tokens[2]}")
+    socket.send(service.execute ? 'bidok' : "underbid #{service.auction.current_bid}")
   end
 end
