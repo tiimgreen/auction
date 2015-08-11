@@ -33,7 +33,7 @@ AuctionSocket.prototype.initBinds = function() {
         _this.underbid(tokens[1]);
         break;
       case 'outbid':
-        _this.outbid(tokens1[1]);
+        _this.outbid(tokens[1]);
         break;
       case 'won':
         _this.won();
@@ -74,7 +74,7 @@ AuctionSocket.prototype.underbid = function(value) {
 
 AuctionSocket.prototype.outbid = function(value) {
   this.form.find('.message strong').html(
-    'You were outbid, it is now: ' + value
+    'Current bid: ' + value + ' <span class="label label-danger">OUTBID!</span>'
   );
 }
 

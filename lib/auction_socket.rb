@@ -3,6 +3,7 @@ require File.expand_path('../place_bid', __FILE__)
 class AuctionSocket
   def initialize(app)
     @app = app
+    @clients = []
   end
 
   # This function is automatically called by Rails as it is middleware
@@ -11,7 +12,9 @@ class AuctionSocket
     @env = env
 
     if socket_request?
-      spawn_socket.rack_response
+      socket = spawn_socket
+      @clients << socket
+      socket.rack_response
     else
       @app.call(env)
     end
@@ -65,6 +68,17 @@ class AuctionSocket
       product_auction_id: tokens[0]
     )
 
-    socket.send(service.execute ? 'bidok' : "underbid #{service.auction.current_bid}")
+    if service.execute
+      socket.send 'bidok'
+      notify_outbids socket, tokens[2]
+    else
+      socket.send "underbid #{service.auction.current_bid}"
+    end
+  end
+
+  def notify_outbids(socket, value)
+    @clients.reject { |client| client == socket }.each do |client|
+      client.send "outbid #{value}"
+    end
   end
 end
